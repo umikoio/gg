@@ -5,6 +5,7 @@ import (
 	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type vector struct {
@@ -28,6 +29,8 @@ type model struct {
 	paddle2 vector
 
 	ball ballBody
+
+	colors []lipgloss.Style
 }
 
 func initialModel() tea.Model {
@@ -41,6 +44,10 @@ func initialModel() tea.Model {
 		ball: ballBody{
 			pos: vector{int(15), int(8)},
 			vel: vector{1, 1},
+		},
+		colors: []lipgloss.Style{
+			lipgloss.NewStyle().Foreground(lipgloss.Color("#aaaaff")),
+			lipgloss.NewStyle().Foreground(lipgloss.Color("#ffaaaa")),
 		},
 	}
 }
@@ -93,7 +100,8 @@ func (m model) View() string {
 	s := ""
 
 	for i := 0; i < m.size.x; i++ {
-		s += string(rune(9608))
+		s += m.colors[i % 2].Render(string(rune(9608)))
+
 		for j := 0; j < m.size.y; j++ {
 			switch (vector{i, j}) {
 			case m.ball.pos:
@@ -107,7 +115,8 @@ func (m model) View() string {
 			}
 		}
 
-		s += fmt.Sprintf("%s\n", string(rune(9608)))
+		s += m.colors[i % 2].Render(string(rune(9608)))
+		s += "\n"
 	}
 
 	s += fmt.Sprintf("\nHit count: %d\n", m.hitCount)
