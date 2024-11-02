@@ -1,0 +1,10 @@
+= gg
+
+A collection of TUI games.
+
+Many games are from Al Sweigart's collection of https://inventwithpython.com/blog/2012/02/20/i-need-practice-programming-49-ideas-for-game-clones-to-code/[games to code] for practice.
+
+== License
+
+This project is public domain. See LICENSE and https://unlicense.org/ for more details.
+

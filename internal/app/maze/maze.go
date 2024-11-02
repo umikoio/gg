@@ -1,0 +1,124 @@
+package maze
+
+import (
+	tea "github.com/charmbracelet/bubbletea"
+)
+
+type vector struct {
+	x int
+	y int
+}
+
+type model struct {
+	maze [][]rune
+	pos vector
+	endpos vector
+	lastMove string
+}
+
+func initialModel() tea.Model {
+	maze := [][]rune{
+		{'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
+		{'#', ' ', ' ', ' ', '#', 'E', ' ', '#', '#', '#'},
+		{'#', ' ', '#', ' ', ' ', '#', ' ', '#', '#', '#'},
+		{'#', ' ', ' ', ' ', '#', ' ', ' ', '#', '#', '#'},
+		{'#', ' ', '#', ' ', ' ', '#', ' ', '#', '#', '#'},
+		{'#', ' ', '#', '#', ' ', ' ', ' ', '#', '#', '#'},
+		{'#', ' ', ' ', ' ', '#', ' ', ' ', '#', '#', '#'},
+		{'#', '#', '#', ' ', '#', ' ', ' ', '#', '#', '#'},
+		{'#', ' ', ' ', ' ', '#', ' ', '#', '#', '#', '#'},
+		{'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
+	}
+
+	return model {
+		maze: maze,
+		pos: vector{8,1},
+		endpos: vector{1,5},
+	}
+}
+
+func (m model) Init() tea.Cmd {
+	return nil
+}
+
+func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "ctrl+c", "q":
+			return m, tea.Quit
+		case "up", "w":
+			m.MovePlayer("up")
+		case "down", "s":
+			m.MovePlayer("down")
+		case "left", "a":
+			m.MovePlayer("left")
+		case "right", "d":
+			m.MovePlayer("right")
+
+		}
+	}
+
+	if m.pos == m.endpos {
+		return m, tea.Quit
+	}
+
+	return m, nil
+}
+
+func (m model) View() string {
+	s := ""
+
+	for i, row := range m.maze {
+		for j, _ := range m.maze[i] {
+			if i == m.pos.x && j == m.pos.y {
+				s += "@"
+			} else if row[j] == 'E' {
+				s += "X"
+			} else if row[j] == '#' {
+				s += string(rune(9608))
+			} else {
+				s += " "
+			}
+		}
+		s += "\n"
+	}
+
+	s += "\n\nup: w | down: s | left: a | right : d | last move: " + m.lastMove + "\n"
+
+	return s
+}
+
+func (m *model) MovePlayer(dir string) {
+	m.lastMove = dir
+	switch dir {
+	case "left":
+		m.pos.y--
+		if m.maze[m.pos.x][m.pos.y] == '#' {
+			m.pos.y++
+		}
+	case "right":
+		m.pos.y++
+		if m.maze[m.pos.x][m.pos.y] == '#' {
+			m.pos.y--
+		}
+	case "up":
+		m.pos.x--
+		if m.maze[m.pos.x][m.pos.y] == '#' {
+			m.pos.x++
+		}
+	case "down":
+		m.pos.x++
+		if m.maze[m.pos.x][m.pos.y] == '#' {
+			m.pos.x--
+		}
+	}
+}
+
+func Run() {
+	p := tea.NewProgram(initialModel())
+
+	if _, err := p.Run(); err != nil {
+		panic(err)
+	}
+}
