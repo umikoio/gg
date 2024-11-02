@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Kaamkiya/gg/internal/app/maze"
-	
+
 	"github.com/charmbracelet/huh"
 )
 
@@ -22,7 +22,7 @@ func main() {
 		).
 		Value(&game).
 		Run()
-	
+
 	switch game {
 	case "maze":
 		maze.Run()

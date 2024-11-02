@@ -1,6 +1,8 @@
 package maze
 
 import (
+	"math/rand"
+
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -10,30 +12,35 @@ type vector struct {
 }
 
 type model struct {
-	maze [][]rune
-	pos vector
-	endpos vector
+	maze     [][]rune
+	pos      vector
+	endpos   vector
 	lastMove string
 }
 
 func initialModel() tea.Model {
-	maze := [][]rune{
-		{'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
-		{'#', ' ', ' ', ' ', '#', 'E', ' ', '#', '#', '#'},
-		{'#', ' ', '#', ' ', ' ', '#', ' ', '#', '#', '#'},
-		{'#', ' ', ' ', ' ', '#', ' ', ' ', '#', '#', '#'},
-		{'#', ' ', '#', ' ', ' ', '#', ' ', '#', '#', '#'},
-		{'#', ' ', '#', '#', ' ', ' ', ' ', '#', '#', '#'},
-		{'#', ' ', ' ', ' ', '#', ' ', ' ', '#', '#', '#'},
-		{'#', '#', '#', ' ', '#', ' ', ' ', '#', '#', '#'},
-		{'#', ' ', ' ', ' ', '#', ' ', '#', '#', '#', '#'},
-		{'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
+	maze := mazes[rand.Intn(len(mazes))]
+
+	startpos := vector{}
+	endpos := vector{}
+
+	for y, _ := range maze {
+		for x, _ := range maze {
+			if maze[y][x] == 'S' {
+				startpos.x = y
+				startpos.y = x
+			}
+			if maze[y][x] == 'E' {
+				endpos.x = y
+				endpos.y = x
+			}
+		}
 	}
 
-	return model {
-		maze: maze,
-		pos: vector{8,1},
-		endpos: vector{1,5},
+	return model{
+		maze:   maze,
+		pos:    startpos,
+		endpos: endpos,
 	}
 }
 
