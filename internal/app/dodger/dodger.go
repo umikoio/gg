@@ -66,7 +66,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	}
 
 	for _, b := range m.blocks {
-		if b.X == m.player.X && b.Y-1 == m.player.Y-1 {
+		if b.X == m.player.X && b.Y == m.player.Y {
 			return m, tea.Quit
 		}
 	}
@@ -122,7 +122,7 @@ func Run() {
 
 	go func() {
 		for {
-			time.Sleep(500 * time.Millisecond)
+			time.Sleep(200 * time.Millisecond)
 			p.Send(spawnBlockMsg{})
 			p.Send(moveBlockMsg{})
 		}
