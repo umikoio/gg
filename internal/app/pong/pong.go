@@ -18,7 +18,7 @@ type ballBody struct {
 	vel vector
 }
 
-type moveBallMsg struct {}
+type moveBallMsg struct{}
 
 type model struct {
 	hitCount int
@@ -38,9 +38,9 @@ func initialModel() tea.Model {
 
 	return model{
 		hitCount: 0,
-		size:    size,
-		paddle1: vector{1, 8},
-		paddle2: vector{size.x - 1, 7},
+		size:     size,
+		paddle1:  vector{1, 8},
+		paddle2:  vector{size.x - 1, 7},
 		ball: ballBody{
 			pos: vector{int(15), int(8)},
 			vel: vector{1, 1},
@@ -79,7 +79,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if m.ball.pos.x < 0 || m.ball.pos.x >= m.size.x {
 			m.ball.vel.x *= -1
 		}
-		
 
 		if m.ball.pos == m.paddle1 || m.ball.pos == m.paddle2 {
 			m.ball.vel.x *= -1
@@ -100,7 +99,7 @@ func (m model) View() string {
 	s := ""
 
 	for i := 0; i < m.size.x; i++ {
-		s += m.colors[i % 2].Render(string(rune(9608)))
+		s += m.colors[i%2].Render(string(rune(9608)))
 
 		for j := 0; j < m.size.y; j++ {
 			switch (vector{i, j}) {
@@ -115,7 +114,7 @@ func (m model) View() string {
 			}
 		}
 
-		s += m.colors[i % 2].Render(string(rune(9608)))
+		s += m.colors[i%2].Render(string(rune(9608)))
 		s += "\n"
 	}
 
@@ -140,7 +139,6 @@ func (m *model) MovePaddle(num, amount int) {
 
 func Run() {
 	p := tea.NewProgram(initialModel())
-
 
 	go func() {
 		for {

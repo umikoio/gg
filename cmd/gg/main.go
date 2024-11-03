@@ -5,6 +5,7 @@ import (
 
 	"github.com/Kaamkiya/gg/internal/app/maze"
 	"github.com/Kaamkiya/gg/internal/app/pong"
+	"github.com/Kaamkiya/gg/internal/app/tictactoe"
 
 	"github.com/charmbracelet/huh"
 )
@@ -19,7 +20,7 @@ func main() {
 		Options(
 			huh.NewOption("maze", "maze"),
 			huh.NewOption("pong", "pong"),
-			//huh.NewOption("2048", "2048"),
+			huh.NewOption("tictactoe", "tictactoe"),
 			//huh.NewOption("tetris", "tetris"),
 		).
 		Value(&game).
@@ -30,6 +31,8 @@ func main() {
 		maze.Run()
 	case "pong":
 		pong.Run()
+	case "tictactoe":
+		tictactoe.Run()
 	default:
 		panic("This game either doesn't exist or hasn't been implemented.")
 	}
