@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/Kaamkiya/gg/internal/app/dodger"
 	"github.com/Kaamkiya/gg/internal/app/maze"
 	"github.com/Kaamkiya/gg/internal/app/pong"
 	"github.com/Kaamkiya/gg/internal/app/tictactoe"
@@ -21,7 +22,7 @@ func main() {
 			huh.NewOption("maze", "maze"),
 			huh.NewOption("pong", "pong"),
 			huh.NewOption("tictactoe", "tictactoe"),
-			//huh.NewOption("tetris", "tetris"),
+			huh.NewOption("dodger", "dodger"),
 		).
 		Value(&game).
 		Run()
@@ -33,6 +34,8 @@ func main() {
 		pong.Run()
 	case "tictactoe":
 		tictactoe.Run()
+	case "dodger":
+		dodger.Run()
 	default:
 		panic("This game either doesn't exist or hasn't been implemented.")
 	}
