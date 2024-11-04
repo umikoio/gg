@@ -2,6 +2,39 @@
 
 A collection of TUI games.
 
+== Installation
+
+If you don't want to install it:
+
+[source,bash]
+----
+$ go run github.com/Kaamkiya/gg
+----
+
+If you want to install it with Go:
+
+[source,bash]
+----
+$ go install github.com/Kaamkiya/gg
+----
+
+If you want to install it without Go:
+
+Go to the https://github.com/Kaamkiya/gg/releases[releases page] and pick the binary for your system.
+
+== Usage
+
+Run the executable (should look something like the following):
+
+[source,bash]
+----
+$ ./gg-linux-amd64
+----
+
+Pick a game from the list and enjoy!
+
+== Credits
+
 Many games are from Al Sweigart's collection of https://inventwithpython.com/blog/2012/02/20/i-need-practice-programming-49-ideas-for-game-clones-to-code/[games to code] for practice.
 
 == License
