@@ -109,7 +109,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	if m.guesses <= -1 {
+	if m.guesses <= -1 || m.word == string(m.showWord) {
 		return m, tea.Quit
 	}
 
