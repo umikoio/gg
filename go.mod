@@ -1,6 +1,6 @@
 module github.com/Kaamkiya/gg
 
-go 1.23.1
+go 1.23.2
 
 require (
 	github.com/charmbracelet/bubbletea v1.1.2
