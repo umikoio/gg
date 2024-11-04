@@ -104,9 +104,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 			if !inWord {
 				m.guessed = append(m.guessed, msg.String())
+				m.guesses--
 			}
-
-			m.guesses--
 		}
 	}
 
