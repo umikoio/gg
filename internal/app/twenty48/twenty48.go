@@ -16,22 +16,25 @@ type model struct {
 }
 
 func initialModel() tea.Model {
-	defaultStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#ffffff"))
+	defaultStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#f9f6f2"))
+	c := func (s string) lipgloss.Color {
+		return lipgloss.Color(s)
+	}
 
 	m := model {
 		colors: map[int]lipgloss.Style{
-			0: defaultStyle.Background(lipgloss.Color("#3c3a32")), 
-			2: defaultStyle.Background(lipgloss.Color("#eee4da")), 
-			4: defaultStyle.Background(lipgloss.Color("#ede0c8")), 
-			8: defaultStyle.Background(lipgloss.Color("#f2b179")), 
-			16:defaultStyle.Background(lipgloss.Color("#f59563")), 
-			32:defaultStyle.Background(lipgloss.Color("#f67c5f")), 
-			64:defaultStyle.Background(lipgloss.Color("#f65e3b")), 
-			128:defaultStyle.Background(lipgloss.Color("#edcf72")), 
-			256:defaultStyle.Background(lipgloss.Color("#edcc61")), 
-			512:defaultStyle.Background(lipgloss.Color("#edc850")), 
-			1024:defaultStyle.Background(lipgloss.Color("#edc53f")), 
-			2048:defaultStyle.Background(lipgloss.Color("#edc22e")), 
+			0: defaultStyle.Background(c("#3c3a32")), 
+			2: defaultStyle.Background(c("#eee4da")).Foreground(c("#000000")), 
+			4: defaultStyle.Background(c("#ede0c8")).Foreground(c("#000000")), 
+			8: defaultStyle.Background(c("#f2b179")).Foreground(c("#f9f6f2")),
+			16:defaultStyle.Background(c("#f59563")).Foreground(c("#f9f6f2")),
+			32:defaultStyle.Background(c("#f67c5f")).Foreground(c("#f9f6f2")), 
+			64:defaultStyle.Background(c("#f65e3b")).Foreground(c("#f9f6f2")), 
+			128:defaultStyle.Background(c("#edcf72")).Foreground(c("#f9f6f2")), 
+			256:defaultStyle.Background(c("#edcc61")).Foreground(c("#f9f6f2")), 
+			512:defaultStyle.Background(c("#edc850")).Foreground(c("#f9f6f2")),
+			1024:defaultStyle.Background(c("#edc53f")).Foreground(c("#f9f6f2")), 
+			2048:defaultStyle.Background(c("#edc22e")).Foreground(c("#f9f6f2")), 
 		},
 		grid: [4][4]int{},
 	}
@@ -144,8 +147,12 @@ func (m *model) AddTile() bool {
 
 	cell := empty[rnd.Intn(len(empty))]
 
-	m.grid[cell/len(m.grid)][cell % len(m.grid)] = 2
-	
+	if rnd.Intn(10) < 9 {
+		m.grid[cell/len(m.grid)][cell % len(m.grid)] = 2
+	} else {
+		m.grid[cell/len(m.grid)][cell % len(m.grid)] = 4
+	}
+
 	return true
 }
 
