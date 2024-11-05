@@ -85,6 +85,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
+	if m.CheckForWin() {
+		return m, tea.Quit
+	}
+
 	return m, nil
 }
 
@@ -93,12 +97,23 @@ func (m model) View() string {
 
 	for y := 0; y < 4; y++ {
 		for x := 0; x < 4; x++ {
+			s += m.colors[m.grid[y][x]].Render("      ")
+		}
+		s += "\n"
+		for x := 0; x < 4; x++ {
 			stringifiedNum := strconv.Itoa(m.grid[y][x])
+			if stringifiedNum == "0" {
+				stringifiedNum = "."
+			}
 
-			for i := 0; i < 4-len(stringifiedNum); i++ {
+			for i := 0; i < 5-len(stringifiedNum); i++ {
 				s += m.colors[m.grid[y][x]].Render(" ")
 			}
-			s += m.colors[m.grid[y][x]].Render(stringifiedNum)
+			s += m.colors[m.grid[y][x]].Render(stringifiedNum + " ")
+		}
+		s += "\n"
+		for x := 0; x < 4; x++ {
+			s += m.colors[m.grid[y][x]].Render("      ")
 		}
 		s += "\n"
 	}
@@ -170,6 +185,18 @@ func (m *model) Rotate90(counterClockWise bool) {
 		}
 	}
 	m.grid = rotatedGrid
+}
+
+func (m model) CheckForWin() bool {
+	for _, row := range m.grid {
+		for x, _ := range row {
+			if row[x] == 2048 {
+				return true
+			}
+		}
+	}
+
+	return false
 }
 
 func Run() {
