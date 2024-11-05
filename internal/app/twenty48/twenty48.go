@@ -2,39 +2,39 @@ package twenty48
 
 import (
 	"math/rand"
-	"time"
 	"strconv"
+	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
 
 type model struct {
-	score int
+	score  int
 	colors map[int]lipgloss.Style
-	grid [4][4]int
+	grid   [4][4]int
 }
 
 func initialModel() tea.Model {
 	defaultStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#f9f6f2"))
-	c := func (s string) lipgloss.Color {
+	c := func(s string) lipgloss.Color {
 		return lipgloss.Color(s)
 	}
 
-	m := model {
+	m := model{
 		colors: map[int]lipgloss.Style{
-			0: defaultStyle.Background(c("#3c3a32")), 
-			2: defaultStyle.Background(c("#eee4da")).Foreground(c("#000000")), 
-			4: defaultStyle.Background(c("#ede0c8")).Foreground(c("#000000")), 
-			8: defaultStyle.Background(c("#f2b179")).Foreground(c("#f9f6f2")),
-			16:defaultStyle.Background(c("#f59563")).Foreground(c("#f9f6f2")),
-			32:defaultStyle.Background(c("#f67c5f")).Foreground(c("#f9f6f2")), 
-			64:defaultStyle.Background(c("#f65e3b")).Foreground(c("#f9f6f2")), 
-			128:defaultStyle.Background(c("#edcf72")).Foreground(c("#f9f6f2")), 
-			256:defaultStyle.Background(c("#edcc61")).Foreground(c("#f9f6f2")), 
-			512:defaultStyle.Background(c("#edc850")).Foreground(c("#f9f6f2")),
-			1024:defaultStyle.Background(c("#edc53f")).Foreground(c("#f9f6f2")), 
-			2048:defaultStyle.Background(c("#edc22e")).Foreground(c("#f9f6f2")), 
+			0:    defaultStyle.Background(c("#3c3a32")),
+			2:    defaultStyle.Background(c("#eee4da")).Foreground(c("#000000")),
+			4:    defaultStyle.Background(c("#ede0c8")).Foreground(c("#000000")),
+			8:    defaultStyle.Background(c("#f2b179")).Foreground(c("#f9f6f2")),
+			16:   defaultStyle.Background(c("#f59563")).Foreground(c("#f9f6f2")),
+			32:   defaultStyle.Background(c("#f67c5f")).Foreground(c("#f9f6f2")),
+			64:   defaultStyle.Background(c("#f65e3b")).Foreground(c("#f9f6f2")),
+			128:  defaultStyle.Background(c("#edcf72")).Foreground(c("#f9f6f2")),
+			256:  defaultStyle.Background(c("#edcc61")).Foreground(c("#f9f6f2")),
+			512:  defaultStyle.Background(c("#edc850")).Foreground(c("#f9f6f2")),
+			1024: defaultStyle.Background(c("#edc53f")).Foreground(c("#f9f6f2")),
+			2048: defaultStyle.Background(c("#edc22e")).Foreground(c("#f9f6f2")),
 		},
 		grid: [4][4]int{},
 	}
@@ -81,7 +81,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.Rotate90(true)
 			if !m.AddTile() {
 				return m, tea.Quit
-			}}
+			}
+		}
 	}
 
 	return m, nil
@@ -94,7 +95,7 @@ func (m model) View() string {
 		for x := 0; x < 4; x++ {
 			stringifiedNum := strconv.Itoa(m.grid[y][x])
 
-			for i := 0; i < 4 - len(stringifiedNum); i++ {
+			for i := 0; i < 4-len(stringifiedNum); i++ {
 				s += m.colors[m.grid[y][x]].Render(" ")
 			}
 			s += m.colors[m.grid[y][x]].Render(stringifiedNum)
@@ -133,7 +134,7 @@ func (m *model) AddTile() bool {
 	for y, row := range m.grid {
 		for x, cell := range row {
 			if cell == 0 {
-				empty = append(empty, y * 4 + x)
+				empty = append(empty, y*4+x)
 			}
 		}
 	}
@@ -141,16 +142,16 @@ func (m *model) AddTile() bool {
 	if len(empty) == 0 {
 		return false
 	}
-	
+
 	rndSrc := rand.NewSource(time.Now().UnixNano())
 	rnd := rand.New(rndSrc)
 
 	cell := empty[rnd.Intn(len(empty))]
 
 	if rnd.Intn(10) < 9 {
-		m.grid[cell/len(m.grid)][cell % len(m.grid)] = 2
+		m.grid[cell/len(m.grid)][cell%len(m.grid)] = 2
 	} else {
-		m.grid[cell/len(m.grid)][cell % len(m.grid)] = 4
+		m.grid[cell/len(m.grid)][cell%len(m.grid)] = 4
 	}
 
 	return true

@@ -5,10 +5,10 @@ import (
 
 	"github.com/Kaamkiya/gg/internal/app/dodger"
 	"github.com/Kaamkiya/gg/internal/app/hangman"
-	"github.com/Kaamkiya/gg/internal/app/twenty48"
 	"github.com/Kaamkiya/gg/internal/app/maze"
 	"github.com/Kaamkiya/gg/internal/app/pong"
 	"github.com/Kaamkiya/gg/internal/app/tictactoe"
+	"github.com/Kaamkiya/gg/internal/app/twenty48"
 
 	"github.com/charmbracelet/huh"
 )
