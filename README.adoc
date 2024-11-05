@@ -33,6 +33,12 @@ $ ./gg-linux-amd64
 
 Pick a game from the list and enjoy!
 
+== Demonstration
+
+image::assets/gameplay.png["An image of 2048, dodger, and hangman being played in different windows."]
+
+2048, dodger, and hangman being played in different windows.
+
 == Credits
 
 Many games are from Al Sweigart's collection of https://inventwithpython.com/blog/2012/02/20/i-need-practice-programming-49-ideas-for-game-clones-to-code/[games to code] for practice.
