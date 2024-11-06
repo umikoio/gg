@@ -119,7 +119,7 @@ func (m model) View() string {
 	}
 
 	s += "\nwasd or arrows to move"
-	
+
 	return s
 }
 

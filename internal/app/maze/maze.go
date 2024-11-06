@@ -12,9 +12,9 @@ type vector struct {
 }
 
 type model struct {
-	maze     [][]rune
-	pos      vector
-	endpos   vector
+	maze   [][]rune
+	pos    vector
+	endpos vector
 }
 
 func initialModel() tea.Model {
