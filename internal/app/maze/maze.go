@@ -15,7 +15,6 @@ type model struct {
 	maze     [][]rune
 	pos      vector
 	endpos   vector
-	lastMove string
 }
 
 func initialModel() tea.Model {
@@ -91,13 +90,12 @@ func (m model) View() string {
 		s += "\n"
 	}
 
-	s += "\n\nup: w | down: s | left: a | right : d | last move: " + m.lastMove + "\n"
+	s += "\n\nwasd or arrows to move\n"
 
 	return s
 }
 
 func (m *model) MovePlayer(dir string) {
-	m.lastMove = dir
 	switch dir {
 	case "left":
 		m.pos.y--

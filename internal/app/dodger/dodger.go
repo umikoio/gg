@@ -75,7 +75,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	s := ""
+	s := fmt.Sprintf("\nScore: %d\n", m.score)
 
 	for y := 0; y < m.size.Y; y++ {
 		for x := 0; x < m.size.X; x++ {
@@ -97,7 +97,7 @@ func (m model) View() string {
 		s += "\n"
 	}
 
-	s += fmt.Sprintf("\nScore: %d\n", m.score)
+	s += "wasd or arrows to move"
 
 	return s
 }

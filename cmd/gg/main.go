@@ -21,12 +21,12 @@ func main() {
 	huh.NewSelect[string]().
 		Title("choose a game:").
 		Options(
+			huh.NewOption("2048", "twenty48"),
 			huh.NewOption("maze", "maze"),
-			huh.NewOption("pong", "pong"),
-			huh.NewOption("tictactoe", "tictactoe"),
 			huh.NewOption("dodger", "dodger"),
 			huh.NewOption("hangman", "hangman"),
-			huh.NewOption("2048", "twenty48"),
+			huh.NewOption("pong (2 player)", "pong"),
+			huh.NewOption("tictactoe (2 player)", "tictactoe"),
 		).
 		Value(&game).
 		Run()
