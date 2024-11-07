@@ -11,6 +11,18 @@ games you can play in your terminal!
 </p>
 </div>
 
+[![License: Unlicense](https://img.shields.io/github/license/Kaamkiya/gg)](https://unlicense.org)
+[![Last commit](https://img.shields.io/github/last-commit/Kaamkiya/gg/main)](https://github.com/Kaamkiya/gg/commits)
+[![Open issue count](https://img.shields.io/github/issues/Kaamkiya/gg)](https://github.com/Kaamkiya/gg/issues)
+[![Open pull request count](https://img.shields.io/github/issues-pr/Kaamkiya/gg)](https://github.com/Kaamkiya/gg/pulls)
+[![Latest release](https://img.shields.io/github/v/tag/Kaamkiya/gg)](https://github.com/Kaamkiya/gg/releases)
+[![Go report card](https://goreportcard.com/badge/github.com/Kaamkiya/gg)](https://goreportcard.com/report/github.com/Kaamkiya/gg)
+![Go version](https://img.shields.io/github/go-mod/go-version/Kaamkiya/gg)
+
+![GitHub contributors](https://img.shields.io/github/contributors-anon/Kaamkiya/gg)
+![Repo size](https://img.shields.io/github/repo-size/Kaamkiya/gg)
+![Top language](https://img.shields.io/github/languages/top/Kaamkiya/gg)
+
 ## About The Project
 
 ![A screenshot of 2048, dodger, and a maze running in separate windows.](assets/gameplay.png)
