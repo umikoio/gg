@@ -103,11 +103,11 @@ func (m model) View() string {
 }
 
 func (m *model) MoveBlocks() {
-	for i, _ := range m.blocks {
+	for i := range m.blocks {
 		m.blocks[i].Y++
 	}
 
-	for i, _ := range m.blocks {
+	for i := range m.blocks {
 		if m.blocks[i].Y > m.size.Y {
 			m.blocks = append(m.blocks[:i], m.blocks[i+1:]...)
 			m.score++

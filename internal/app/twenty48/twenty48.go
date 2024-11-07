@@ -124,7 +124,7 @@ func (m model) View() string {
 }
 
 func (m *model) MergeTilesLeft() {
-	for i, _ := range m.grid {
+	for i := range m.grid {
 		stopMerge := 0
 		for j := 1; j < len(m.grid[i]); j++ {
 			if m.grid[i][j] != 0 {
@@ -191,7 +191,7 @@ func (m *model) Rotate90(counterClockWise bool) {
 
 func (m model) CheckForWin() bool {
 	for _, row := range m.grid {
-		for x, _ := range row {
+		for x := range row {
 			if row[x] == 2048 {
 				return true
 			}

@@ -23,8 +23,8 @@ func initialModel() tea.Model {
 	startpos := vector{}
 	endpos := vector{}
 
-	for y, _ := range maze {
-		for x, _ := range maze {
+	for y := range maze {
+		for x := range maze {
 			if maze[y][x] == 'S' {
 				startpos.x = y
 				startpos.y = x
@@ -76,7 +76,7 @@ func (m model) View() string {
 	s := ""
 
 	for i, row := range m.maze {
-		for j, _ := range m.maze[i] {
+		for j := range m.maze[i] {
 			if i == m.pos.x && j == m.pos.y {
 				s += "@"
 			} else if row[j] == 'E' {

@@ -18,7 +18,7 @@ func initialModel() tea.Model {
 	word := wordlist[rand.Intn(len(wordlist))]
 
 	showWord := []rune{}
-	for _, _ = range word {
+	for range word {
 		showWord = append(showWord, '_')
 	}
 

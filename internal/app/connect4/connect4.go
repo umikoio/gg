@@ -13,8 +13,8 @@ type model struct {
 
 func initialModel() tea.Model {
 	board := [6][7]rune{}
-	for y, _ := range board {
-		for x, _ := range board[y] {
+	for y := range board {
+		for x := range board[y] {
 			board[y][x] = ' '
 		}
 	}
