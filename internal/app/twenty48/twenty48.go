@@ -26,19 +26,20 @@ func initialModel() tea.Model {
 			0:    defaultStyle.Background(c("#3c3a32")),
 			2:    defaultStyle.Background(c("#eee4da")).Foreground(c("#000000")),
 			4:    defaultStyle.Background(c("#ede0c8")).Foreground(c("#000000")),
-			8:    defaultStyle.Background(c("#f2b179")).Foreground(c("#f9f6f2")),
-			16:   defaultStyle.Background(c("#f59563")).Foreground(c("#f9f6f2")),
-			32:   defaultStyle.Background(c("#f67c5f")).Foreground(c("#f9f6f2")),
-			64:   defaultStyle.Background(c("#f65e3b")).Foreground(c("#f9f6f2")),
-			128:  defaultStyle.Background(c("#edcf72")).Foreground(c("#f9f6f2")),
-			256:  defaultStyle.Background(c("#edcc61")).Foreground(c("#f9f6f2")),
-			512:  defaultStyle.Background(c("#edc850")).Foreground(c("#f9f6f2")),
-			1024: defaultStyle.Background(c("#edc53f")).Foreground(c("#f9f6f2")),
-			2048: defaultStyle.Background(c("#edc22e")).Foreground(c("#f9f6f2")),
+			8:    defaultStyle.Background(c("#f2b179")),
+			16:   defaultStyle.Background(c("#f59563")),
+			32:   defaultStyle.Background(c("#f67c5f")),
+			64:   defaultStyle.Background(c("#f65e3b")),
+			128:  defaultStyle.Background(c("#edcf72")),
+			256:  defaultStyle.Background(c("#edcc61")),
+			512:  defaultStyle.Background(c("#edc850")),
+			1024: defaultStyle.Background(c("#edc53f")),
+			2048: defaultStyle.Background(c("#edc22e")),
 		},
 		grid: [4][4]int{},
 	}
 
+	// The board needs to start with two starting tiles.
 	m.AddTile()
 	m.AddTile()
 	return m
@@ -56,10 +57,28 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case "left", "a":
 			m.MergeTilesLeft()
+			/* NOTE: There is an edge case here. This code requires
+			 * that every move the user makes must free up a tile.
+			 * This means that even if the board looks like this:
+			 * 2 | 4 | 8 | 16
+			 * 2 | 4 | 8 | 16
+			 * 2 | 4 | 8 | 16
+			 * 2 | 4 | 8 | 16
+			 * and there is still technically a possible move, if
+			 * the player does not open up new space, the game is
+			 * over.
+			 */
+			// TODO: Fix above.
 			if !m.AddTile() {
 				return m, tea.Quit
 			}
 		case "down", "s":
+			/* Instead of creating a seperate method to merge down,
+			 * we rotate the grid. This is because the
+			 * m.MergeTilesLeft() method is *much* more complex
+			 * than m.Rotate90(), so it's simpler to rotate, merge,
+			 * then rotate back than to create a seperate function.
+			 */
 			m.Rotate90(false)
 			m.MergeTilesLeft()
 			m.Rotate90(true)
@@ -97,6 +116,15 @@ func (m model) View() string {
 
 	for y := 0; y < 4; y++ {
 		for x := 0; x < 4; x++ {
+			/* The tiles don't look like this: |  256 |, they llok
+			 * like this: --------
+			 *            |      |
+			 *            |  256 |
+			 *            |      |
+			 *            --------
+			 * For that reason, we add empty spaces. It provides a
+			 * row of padding, so the game looks better.
+			 */
 			s += m.colors[m.grid[y][x]].Render("      ")
 		}
 		s += "\n"
@@ -106,6 +134,9 @@ func (m model) View() string {
 				stringifiedNum = "."
 			}
 
+			/* Add spaces before the number so that the width of
+			 * the tiles is even.
+			 */
 			for i := 0; i < 5-len(stringifiedNum); i++ {
 				s += m.colors[m.grid[y][x]].Render(" ")
 			}
@@ -113,6 +144,7 @@ func (m model) View() string {
 		}
 		s += "\n"
 		for x := 0; x < 4; x++ {
+			// This is for the bottom line of padding.
 			s += m.colors[m.grid[y][x]].Render("      ")
 		}
 		s += "\n"
