@@ -84,6 +84,19 @@ To contribute:
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+## Roadmap
+
+* [ ] Blackjack
+* [ ] A simple platforming game
+* [ ] Space invaders (minimal, the invaders don't have to actually look like
+  invaders)
+* [ ] Simon
+* [ ] Snake
+* [ ] Solitaire
+* [ ] Tetris
+* [ ] Tron
+* [ ] Typespeed
+
 ## License
 
 Distributed under the Unlicense. See [Unlicense License](https://unlicense.org) for more information.
