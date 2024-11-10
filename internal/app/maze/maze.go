@@ -24,7 +24,7 @@ func initialModel() tea.Model {
 	endpos := vector{}
 
 	for y := range maze {
-		for x := range maze {
+		for x := range maze[y] {
 			if maze[y][x] == 'S' {
 				startpos.x = y
 				startpos.y = x
