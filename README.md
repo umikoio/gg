@@ -104,5 +104,5 @@ Distributed under the Unlicense. See [Unlicense License](https://unlicense.org) 
 ## Acknowledgments
 
 
-- [Al Sweigart's list of games to clone](https://inventwithpython.com/blog/2012/02/20/i-need-practice-programming-49-ideas-for-game-clones-to-code/)
+* [Al Sweigart's list of games to clone](https://inventwithpython.com/blog/2012/02/20/i-need-practice-programming-49-ideas-for-game-clones-to-code/)
 
