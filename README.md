@@ -50,11 +50,11 @@ This section is about installation and usage.
 
 1. Installation with Go:
   ```
-  go install github.com/Kaamkiya/gg@latest
+  go install github.com/Kaamkiya/gg/cmd/gg@latest
   ```
 2. Running with Go: if you don't want to install it but still want to play
   ```
-  go run github.com/Kaamkiya/gg@latest
+  go run github.com/Kaamkiya/gg/cmd/gg@latest
   ```
 3. Release binary:
   * Go to the [releases page](https://github.com/Kaamkiya/gg/releases)
