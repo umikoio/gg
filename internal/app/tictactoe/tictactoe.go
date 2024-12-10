@@ -12,7 +12,6 @@ var winner = ' '
 
 type model struct {
 	turn   rune
-	winner rune
 	board  [9]rune
 	xcolor lipgloss.Style
 	ocolor lipgloss.Style

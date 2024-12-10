@@ -10,7 +10,7 @@ import (
 )
 
 type model struct {
-	score  int
+	// TODO: add a score counter.
 	colors map[int]lipgloss.Style
 	grid   [4][4]int
 }

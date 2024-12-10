@@ -17,9 +17,9 @@ import (
 func main() {
 	var game string
 
-	fmt.Println("gg - a tui for small offline games\n")
+	fmt.Println("gg - a tui for small offline games")
 
-	huh.NewSelect[string]().
+	err := huh.NewSelect[string]().
 		Title("choose a game:").
 		Options(
 			huh.NewOption("2048", "twenty48"),
@@ -32,6 +32,11 @@ func main() {
 		).
 		Value(&game).
 		Run()
+
+	if err != nil {
+		fmt.Println("Error: failed to run selection menu.")
+		panic(err)
+	}
 
 	switch game {
 	case "maze":
