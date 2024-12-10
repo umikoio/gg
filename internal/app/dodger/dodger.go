@@ -13,15 +13,15 @@ type spawnBlockMsg struct{}
 type moveBlockMsg struct{}
 
 type vector struct {
-	X int
-	Y int
+	x int
+	y int
 }
 
 type model struct {
-	size   vector
-	player vector
-	blocks []vector
-	score  int
+	size   vector   // The size of the screen.
+	player vector   // The position of the player.
+	blocks []vector // The positions of each block on the screen.
+	score  int      // The amount of blocks that have gone off-screen.
 
 	blockStyle  lipgloss.Style
 	playerStyle lipgloss.Style
@@ -30,9 +30,10 @@ type model struct {
 func initialModel() tea.Model {
 	size := vector{30, 20}
 	return model{
-		size:   size,
-		player: vector{int(size.X / 2), size.Y - 1},
-		blocks: []vector{}, score: 0,
+		size:        size,
+		player:      vector{int(size.x / 2), size.y - 1},
+		blocks:      []vector{},
+		score:       0,
 		blockStyle:  lipgloss.NewStyle().Foreground(lipgloss.Color("#cccccc")),
 		playerStyle: lipgloss.NewStyle().Foreground(lipgloss.Color("#aaaaff")),
 	}
@@ -49,24 +50,24 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c", "q":
 			return m, tea.Quit
 		case "left", "a":
-			m.player.X--
-			if m.player.X < 0 {
-				m.player.X = m.size.X - 1
+			m.player.x--
+			if m.player.x < 0 {
+				m.player.x = m.size.x - 1
 			}
 		case "right", "d":
-			m.player.X++
-			if m.player.X >= m.size.X {
-				m.player.X = 0
+			m.player.x++
+			if m.player.x >= m.size.x {
+				m.player.x = 0
 			}
 		}
 	case spawnBlockMsg:
-		m.blocks = append(m.blocks, vector{rand.Intn(m.size.X), 0})
+		m.blocks = append(m.blocks, vector{rand.Intn(m.size.x), 0})
 	case moveBlockMsg:
-		m.MoveBlocks()
+		m.moveBlocks()
 	}
 
 	for _, b := range m.blocks {
-		if b.X == m.player.X && b.Y == m.player.Y {
+		if b.x == m.player.x && b.y == m.player.y {
 			return m, tea.Quit
 		}
 	}
@@ -77,18 +78,18 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	s := fmt.Sprintf("\nScore: %d\n", m.score)
 
-	for y := 0; y < m.size.Y; y++ {
-		for x := 0; x < m.size.X; x++ {
+	for y := 0; y < m.size.y; y++ {
+		for x := 0; x < m.size.x; x++ {
 			drew := false
 			for _, b := range m.blocks {
-				if b.X == x && b.Y == y {
-					s += m.blockStyle.Render(string(rune(0x2022)))
+				if b.x == x && b.y == y {
+					s += m.blockStyle.Render(string(rune(0x2022))) // 0x2022 is a unicode bullet point.
 					drew = true
 				}
 			}
 			if !drew {
-				if x == m.player.X && y == m.player.Y {
-					s += m.playerStyle.Render(string(rune(0x2205)))
+				if x == m.player.x && y == m.player.y {
+					s += m.playerStyle.Render(string(rune(0x2205))) // 0x2205 is a unicode rectangle.
 				} else {
 					s += " "
 				}
@@ -102,13 +103,13 @@ func (m model) View() string {
 	return s
 }
 
-func (m *model) MoveBlocks() {
+func (m *model) moveBlocks() {
 	for i := range m.blocks {
-		m.blocks[i].Y++
+		m.blocks[i].y++
 	}
 
 	for i := range m.blocks {
-		if m.blocks[i].Y > m.size.Y {
+		if m.blocks[i].y > m.size.y {
 			m.blocks = append(m.blocks[:i], m.blocks[i+1:]...)
 			m.score++
 			// There can only be one block to be removed every time.
@@ -118,17 +119,17 @@ func (m *model) MoveBlocks() {
 }
 
 func Run() {
-	p := tea.NewProgram(initialModel())
+	prog := tea.NewProgram(initialModel())
 
 	go func() {
 		for {
 			time.Sleep(200 * time.Millisecond)
-			p.Send(spawnBlockMsg{})
-			p.Send(moveBlockMsg{})
+			prog.Send(spawnBlockMsg{})
+			prog.Send(moveBlockMsg{})
 		}
 	}()
 
-	if _, err := p.Run(); err != nil {
+	if _, err := prog.Run(); err != nil {
 		panic(err)
 	}
 }
