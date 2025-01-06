@@ -19,6 +19,7 @@ games you can play in your terminal!
 
 ## About The Project
 
+![A recording of a maze game being played, then the dodger game.](assets/gg.gif)
 ![A screenshot of 2048, dodger, and a maze running in separate windows.](assets/gameplay.png)
 
 I like to play video games, probably like you. But I prefer smaller, more minimal games. And I figured the best way to keep games minimal is to play them from the CLI!
