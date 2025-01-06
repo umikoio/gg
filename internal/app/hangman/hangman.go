@@ -2,6 +2,7 @@ package hangman
 
 import (
 	"math/rand/v2"
+	"slices"
 
 	tea "github.com/charmbracelet/bubbletea"
 )
@@ -94,16 +95,21 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c":
 			return m, tea.Quit
 		case "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z":
+			letter := msg.String()
+			if slices.Contains(m.guessed, letter) {
+				return m, nil
+			}
+
 			inWord := false
 			for i, char := range m.word {
-				if string(char) == msg.String() {
+				if string(char) == letter {
 					m.showWord[i] = char
 					inWord = true
 				}
 			}
 
 			if !inWord {
-				m.guessed = append(m.guessed, msg.String())
+				m.guessed = append(m.guessed, letter)
 				m.guesses--
 			}
 		}
