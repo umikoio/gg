@@ -55,7 +55,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "ctrl+c", "q":
 			return m, tea.Quit
-		case "left", "a":
+		case "left", "h":
 			m.MergeTilesLeft()
 			/* NOTE: There is an edge case here. This code requires
 			 * that every move the user makes must free up a tile.
@@ -72,7 +72,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if !m.AddTile() {
 				return m, tea.Quit
 			}
-		case "down", "s":
+		case "down", "j":
 			/* Instead of creating a seperate method to merge down,
 			 * we rotate the grid. This is because the
 			 * m.MergeTilesLeft() method is *much* more complex
@@ -85,14 +85,14 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if !m.AddTile() {
 				return m, tea.Quit
 			}
-		case "up", "w":
+		case "up", "k":
 			m.Rotate90(true)
 			m.MergeTilesLeft()
 			m.Rotate90(false)
 			if !m.AddTile() {
 				return m, tea.Quit
 			}
-		case "right", "d":
+		case "right", "l":
 			m.Rotate90(false)
 			m.Rotate90(false)
 			m.MergeTilesLeft()
@@ -150,7 +150,7 @@ func (m model) View() string {
 		s += "\n"
 	}
 
-	s += "\nwasd or arrows to move"
+	s += "\nhjkl or arrows to move"
 
 	return s
 }

@@ -49,12 +49,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "ctrl+c", "q":
 			return m, tea.Quit
-		case "left", "a":
+		case "left", "h":
 			m.player.x--
 			if m.player.x < 0 {
 				m.player.x = m.size.x - 1
 			}
-		case "right", "d":
+		case "right", "l":
 			m.player.x++
 			if m.player.x >= m.size.x {
 				m.player.x = 0
@@ -98,7 +98,7 @@ func (m model) View() string {
 		s += "\n"
 	}
 
-	s += "wasd or arrows to move"
+	s += "hjkl or arrows to move"
 
 	return s
 }
