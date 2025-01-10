@@ -52,13 +52,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "ctrl+c", "q":
 			return m, tea.Quit
-		case "up", "w":
+		case "up", "k":
 			m.MovePlayer("up")
-		case "down", "s":
+		case "down", "j":
 			m.MovePlayer("down")
-		case "left", "a":
+		case "left", "h":
 			m.MovePlayer("left")
-		case "right", "d":
+		case "right", "l":
 			m.MovePlayer("right")
 
 		}
@@ -89,7 +89,7 @@ func (m model) View() string {
 		s += "\n"
 	}
 
-	s += "\n\nwasd or arrows to move\n"
+	s += "\n\nhjkl or arrows to move\n"
 
 	return s
 }
