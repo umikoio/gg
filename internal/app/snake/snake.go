@@ -6,6 +6,7 @@ import (
 	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type moveMsg struct{}
@@ -35,6 +36,7 @@ var (
 type player struct {
 	body []vector
 	dir  vector
+	style lipgloss.Style
 }
 
 func (p *player) move(m model, foodPos vector) {
@@ -60,6 +62,7 @@ func (p player) headChar() rune {
 
 type model struct {
 	foodPos vector
+	foodStyle lipgloss.Style
 	player  player
 }
 
@@ -133,16 +136,16 @@ func (m model) View() string {
 			for i, b := range m.player.body {
 				if b.x == x && b.y == y {
 					if i == 0 {
-						s += string(m.player.headChar())
+						s += m.player.style.Render(string(m.player.headChar()))
 					} else {
-						s += "*"
+						s += m.player.style.Render("*")
 					}
 					drew = true
 				}
 			}
 			if !drew {
 				if x == m.foodPos.x && y == m.foodPos.y {
-					s += "0"
+					s += m.foodStyle.Render("0")
 					drew = true
 				}
 			}
@@ -164,9 +167,11 @@ func initialModel() tea.Model {
 			x: rand.IntN(20),
 			y: rand.IntN(20),
 		},
+		foodStyle: lipgloss.NewStyle().Foreground(lipgloss.Color("#ff0000")),
 		player: player{
 			body: []vector{{6, 6}},
 			dir:  dirRight,
+			style: lipgloss.NewStyle().Foreground(lipgloss.Color("32")),
 		},
 	}
 }
