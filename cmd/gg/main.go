@@ -34,7 +34,6 @@ func main() {
 		).
 		Value(&game).
 		Run()
-
 	if err != nil {
 		fmt.Println("Error: failed to run selection menu.")
 		panic(err)

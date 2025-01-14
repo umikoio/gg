@@ -17,8 +17,7 @@ func NewMazeGenerator(generator string) MazeGenerator {
 	}
 }
 
-type PrimGenerator struct {
-}
+type PrimGenerator struct{}
 
 func (p *PrimGenerator) Generate(maze *Maze) {
 	startX, startY := maze.GetStartPos()

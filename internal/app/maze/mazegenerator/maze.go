@@ -112,7 +112,6 @@ func (m *Maze) MakePath(cell Cell) {
 		return
 	}
 	m.Set(cell.x, cell.y, PATH)
-
 }
 
 func (m Maze) Print() {

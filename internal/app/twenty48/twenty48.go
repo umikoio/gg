@@ -73,11 +73,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, tea.Quit
 			}
 		case "down", "j":
-			/* Instead of creating a seperate method to merge down,
+			/* Instead of creating a separate method to merge down,
 			 * we rotate the grid. This is because the
 			 * m.MergeTilesLeft() method is *much* more complex
 			 * than m.Rotate90(), so it's simpler to rotate, merge,
-			 * then rotate back than to create a seperate function.
+			 * then rotate back than to create a separate function.
 			 */
 			m.Rotate90(false)
 			m.MergeTilesLeft()
@@ -161,15 +161,16 @@ func (m *model) MergeTilesLeft() {
 		for j := 1; j < len(m.grid[i]); j++ {
 			if m.grid[i][j] != 0 {
 				for k := j; k > stopMerge; k-- {
-					if m.grid[i][k-1] == 0 {
+					switch {
+					case m.grid[i][k-1] == 0:
 						m.grid[i][k-1] = m.grid[i][k]
 						m.grid[i][k] = 0
-					} else if m.grid[i][k-1] == m.grid[i][k] {
+					case m.grid[i][k-1] == m.grid[i][k]:
 						m.grid[i][k-1] += m.grid[i][k]
 						m.grid[i][k] = 0
 						stopMerge = k
 						break
-					} else {
+					default:
 						break
 					}
 				}

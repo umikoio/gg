@@ -22,6 +22,7 @@ func (v vector) add(other vector) vector {
 		y: v.y + other.y,
 	}
 }
+
 func (v vector) equals(other vector) bool {
 	return v.x == other.x && v.y == other.y
 }
@@ -34,8 +35,8 @@ var (
 )
 
 type player struct {
-	body []vector
-	dir  vector
+	body  []vector
+	dir   vector
 	style lipgloss.Style
 }
 
@@ -61,9 +62,9 @@ func (p player) headChar() rune {
 }
 
 type model struct {
-	foodPos vector
+	foodPos   vector
 	foodStyle lipgloss.Style
-	player  player
+	player    player
 }
 
 func (m *model) setRandomFoodPos() {
@@ -169,8 +170,8 @@ func initialModel() tea.Model {
 		},
 		foodStyle: lipgloss.NewStyle().Foreground(lipgloss.Color("#ff0000")),
 		player: player{
-			body: []vector{{6, 6}},
-			dir:  dirRight,
+			body:  []vector{{6, 6}},
+			dir:   dirRight,
 			style: lipgloss.NewStyle().Foreground(lipgloss.Color("32")),
 		},
 	}

@@ -25,8 +25,8 @@ func initialModel() tea.Model {
 	}
 
 	return model{
-		board: board,
-		turn:  'x',
+		board:  board,
+		turn:   'x',
 		xStyle: lipgloss.NewStyle().Foreground(lipgloss.Color("2")),
 		oStyle: lipgloss.NewStyle().Foreground(lipgloss.Color("9")),
 	}
@@ -87,7 +87,7 @@ func (m model) View() string {
 			if cell == 'x' {
 				style = m.xStyle
 			}
-			
+
 			s += style.Render(string(cell)) + " | "
 		}
 		s += "\n"

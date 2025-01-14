@@ -9,8 +9,10 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-type spawnBlockMsg struct{}
-type moveBlockMsg struct{}
+type (
+	spawnBlockMsg struct{}
+	moveBlockMsg  struct{}
+)
 
 type vector struct {
 	x int

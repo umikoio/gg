@@ -107,11 +107,13 @@ func (m model) CheckForWin() rune {
 	}
 
 	// And finally, check the diagonals.
-	if m.board[0] == 'x' && m.board[4] == 'x' && m.board[8] == 'x' || m.board[2] == 'x' && m.board[4] == 'x' && m.board[6] == 'x' {
+	if m.board[0] == 'x' && m.board[4] == 'x' && m.board[8] == 'x' ||
+		m.board[2] == 'x' && m.board[4] == 'x' && m.board[6] == 'x' {
 		return 'x'
 	}
 
-	if m.board[0] == 'o' && m.board[4] == 'o' && m.board[8] == 'o' || m.board[2] == 'o' && m.board[4] == 'o' && m.board[6] == 'o' {
+	if m.board[0] == 'o' && m.board[4] == 'o' && m.board[8] == 'o' ||
+		m.board[2] == 'o' && m.board[4] == 'o' && m.board[6] == 'o' {
 		return 'o'
 	}
 

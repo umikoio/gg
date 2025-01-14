@@ -128,7 +128,7 @@ func isPathExists(maze *Maze, startX, startY, endX, endY int) bool {
 	return dfs(startX, startY)
 }
 
-// Mazes for testing
+// Mazes for testing.
 var mazes = [][][]rune{
 	{
 		{'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
