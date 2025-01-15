@@ -169,7 +169,6 @@ func (m *model) MergeTilesLeft() {
 						m.grid[i][k-1] += m.grid[i][k]
 						m.grid[i][k] = 0
 						stopMerge = k
-						break
 					default:
 						break
 					}
