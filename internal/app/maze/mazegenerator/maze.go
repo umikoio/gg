@@ -2,7 +2,7 @@ package mazegenerator
 
 import (
 	"fmt"
-	"math/rand"
+	"math/rand/v2"
 )
 
 const (
@@ -40,8 +40,8 @@ func NewMaze(width, height int) *Maze {
 		}
 	}
 
-	startX := rand.Intn(width/4) + 1
-	startY := rand.Intn(height/4) + 1
+	startX := rand.IntN(width/4) + 1
+	startY := rand.IntN(height/4) + 1
 
 	grid[startY][startX] = START
 

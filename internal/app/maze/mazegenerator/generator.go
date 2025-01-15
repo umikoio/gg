@@ -1,8 +1,6 @@
 package mazegenerator
 
-import (
-	"math/rand"
-)
+import "math/rand/v2"
 
 type MazeGenerator interface {
 	Generate(maze *Maze)
@@ -32,7 +30,7 @@ func (p *PrimGenerator) Generate(maze *Maze) {
 
 	for len(walls) > 0 {
 		// Pop random wall
-		randIdx := rand.Intn(len(walls))
+		randIdx := rand.IntN(len(walls))
 		wall := walls[randIdx]
 		walls = append(walls[:randIdx], walls[randIdx+1:]...)
 
@@ -44,7 +42,7 @@ func (p *PrimGenerator) Generate(maze *Maze) {
 		if len(paths) == 0 {
 			continue
 		}
-		path := paths[rand.Intn(len(paths))]
+		path := paths[rand.IntN(len(paths))]
 
 		// skip special case: last wall before boundary
 		if wall.Diff(path) != 1 {
