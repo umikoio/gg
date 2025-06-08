@@ -12,3 +12,16 @@ echo "Building for darwin amd64..."
 GOOS=darwin GOARCH=amd64 go build -o gg-darwin-amd64 ./cmd/gg/
 echo "Building for darwin arm64..."
 GOOS=darwin GOARCH=arm64 go build -o gg-darwin-arm64 ./cmd/gg/
+
+echo "Archving linux amd64 build"
+tar -czvf gg-linux-amd64.tar.gz gg-linux-amd64
+rm gg-linux-amd64
+echo "Archving linux arm64 build"
+tar -czvf gg-linux-arm64.tar.gz gg-linux-arm64
+rm gg-linux-arm64
+echo "Archving darwin amd64 build"
+tar -czvf gg-darwin-amd64.tar.gz gg-darwin-amd64
+rm gg-darwin-amd64
+echo "Archving darwin arm64 build"
+tar -czvf gg-darwin-arm64.tar.gz gg-darwin-arm64
+rm gg-darwin-arm64
