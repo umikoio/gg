@@ -56,22 +56,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c", "q":
 			return m, tea.Quit
 		case "left", "h":
+			beforeMerge := m.grid
 			m.MergeTilesLeft()
-			/* NOTE: There is an edge case here. This code requires
-			 * that every move the user makes must free up a tile.
-			 * This means that even if the board looks like this:
-			 * 2 | 4 | 8 | 16
-			 * 2 | 4 | 8 | 16
-			 * 2 | 4 | 8 | 16
-			 * 2 | 4 | 8 | 16
-			 * and there is still technically a possible move, if
-			 * the player does not open up new space, the game is
-			 * over.
-			 */
-			// TODO: Fix above.
-			if !m.AddTile() {
-				return m, tea.Quit
-			}
+			m.ValidateTile(beforeMerge)
 		case "down", "j":
 			/* Instead of creating a separate method to merge down,
 			 * we rotate the grid. This is because the
@@ -79,32 +66,35 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			 * than m.Rotate90(), so it's simpler to rotate, merge,
 			 * then rotate back than to create a separate function.
 			 */
+			beforeMerge := m.grid
 			m.Rotate90(false)
 			m.MergeTilesLeft()
 			m.Rotate90(true)
-			if !m.AddTile() {
-				return m, tea.Quit
-			}
+
+			m.ValidateTile(beforeMerge)
 		case "up", "k":
+			beforeMerge := m.grid
 			m.Rotate90(true)
 			m.MergeTilesLeft()
 			m.Rotate90(false)
-			if !m.AddTile() {
-				return m, tea.Quit
-			}
+			m.ValidateTile(beforeMerge)
 		case "right", "l":
+			beforeMerge := m.grid
 			m.Rotate90(false)
 			m.Rotate90(false)
 			m.MergeTilesLeft()
 			m.Rotate90(true)
 			m.Rotate90(true)
-			if !m.AddTile() {
-				return m, tea.Quit
-			}
+			m.ValidateTile(beforeMerge)
 		}
 	}
 
 	if m.CheckForWin() {
+		return m, tea.Quit
+	}
+
+	// The game is over when there are no possible merges.
+	if !m.CanMove() {
 		return m, tea.Quit
 	}
 
@@ -116,7 +106,7 @@ func (m model) View() string {
 
 	for y := 0; y < 4; y++ {
 		for x := 0; x < 4; x++ {
-			/* The tiles don't look like this: |  256 |, they llok
+			/* The tiles don't look like this: |  256 |, they look
 			 * like this: --------
 			 *            |      |
 			 *            |  256 |
@@ -228,6 +218,50 @@ func (m model) CheckForWin() bool {
 	for _, row := range m.grid {
 		for x := range row {
 			if row[x] == 2048 {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
+func (m *model) ValidateTile(beforeMerge [4][4]int) (tea.Model, tea.Cmd) {
+	// Check if the grid has changed after handling the merge logic.
+	if m.grid != beforeMerge {
+		// If unable to add a tile, quit.
+		if !m.AddTile() {
+			return m, tea.Quit
+		}
+	}
+
+	return m, nil
+}
+
+// Validates that movement is possible. Returns true only if there is at least one empty tile or any adjacent equal pairs present.
+func (m model) CanMove() bool {
+	// Checks for empty tiles.
+	for y := 0; y < 4; y++ {
+		for x := 0; x < 4; x++ {
+			if m.grid[y][x] == 0 {
+				return true
+			}
+		}
+	}
+
+	// Checks if there are any horizontal merges within the grid.
+	for y := 0; y < 4; y++ {
+		for x := 0; x < 3; x++ {
+			if m.grid[y][x] == m.grid[y][x+1] {
+				return true
+			}
+		}
+	}
+
+	// Checks if there are any vertical merges within the grid.
+	for x := 0; x < 4; x++ {
+		for y := 0; y < 3; y++ {
+			if m.grid[y][x] == m.grid[y+1][x] {
 				return true
 			}
 		}

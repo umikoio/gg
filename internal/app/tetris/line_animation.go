@@ -74,4 +74,3 @@ func (gs *gameState) handleLineAnimationTick(animationTick lineAnimationTick) te
 		}
 	})
 }
-
